@@ -10,7 +10,7 @@ http://scripts.inseo.cz/nette/captcha-control
 
 For enable add Extras\CaptchaControl::register(); to your bootstrap.php.
 
-$form = new Form;
+$form = new AppForm;
 $form->addCaptcha('captcha')
     ->addRule(Form::FILLED, "Rewrite text from image.")
     ->addRule($form["captcha"]->getValidator(), 'Try it again.')
