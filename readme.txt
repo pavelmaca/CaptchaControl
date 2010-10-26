@@ -6,7 +6,7 @@ Nette Framework 1.x or higher. (PHP 5.3 edition)
 
 Documentation and Examples
 --------------------------
-http://scripts.inseo.cz/nette/captcha-control
+http://github.com/PavelMaca/CaptchaControl
 
 For enable add Extras\CaptchaControl::register(); to your bootstrap.php.
 
