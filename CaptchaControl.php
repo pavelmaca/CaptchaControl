@@ -26,7 +26,7 @@ class CaptchaControl extends Nette\Forms\TextBase
 	/*	 * #@+ character groups */
 	const CONSONANTS = 'bcdfghjkmnpqrstvwxz';
 	const VOWELS = 'aeiuy'; // not 'o'
-	//const NUMBERS = '0123456789';
+	const NUMBERS = '123456789'; // not '0'
 	/*	 * #@- */
 
 	/** @var string */
@@ -61,6 +61,9 @@ class CaptchaControl extends Nette\Forms\TextBase
 
 	/** @var int */
 	public static $defaultExpire = 10800; // 3 hours
+	
+	/** @var bool */
+	public static $defaultUseNumbers = true;
 
 	/** @var bool */
 	private static $registered = false;
@@ -106,6 +109,9 @@ class CaptchaControl extends Nette\Forms\TextBase
 
 	/** @var int */
 	private $expire;
+	
+	/** @var bool */
+	private $useNumbers;
 
 	/**
 	 * @return void
@@ -132,6 +138,7 @@ class CaptchaControl extends Nette\Forms\TextBase
 		$this->setFilterSmooth(self::$defaultFilterSmooth);
 		$this->setFilterContrast(self::$defaultFilterContrast);
 		$this->setExpire(self::$defaultExpire);
+		$this->useNumbers(self::$defaultUseNumbers);
 
 		$this->setUid(uniqid());
 	}
@@ -384,6 +391,17 @@ class CaptchaControl extends Nette\Forms\TextBase
 	{
 		return $this->expire;
 	}
+	
+	/**
+	 * Use numbers in captcha image? 
+	 * @param bool
+	 * @return CaptchaControl provides a fluent interface
+	 */
+	public function useNumbers($useNumbers = true)
+	{
+		$this->useNumbers = (bool) $useNumbers;
+		return $this;
+	}
 
 	/**
 	 * @param int
@@ -460,6 +478,11 @@ class CaptchaControl extends Nette\Forms\TextBase
 		if (!$this->word) {
 			$s = '';
 			for ($i = 0; $i < $this->getLength(); $i++) {
+				if($this->useNumbers === true && mt_rand(0, 10) % 3 === 0){
+					$group = self::NUMBERS;
+					$s .= $group{mt_rand(0, strlen($group) - 1)};
+					continue;
+				}
 				$group = $i % 2 === 0 ? self::CONSONANTS : self::VOWELS;
 				$s .= $group{mt_rand(0, strlen($group) - 1)};
 			}
