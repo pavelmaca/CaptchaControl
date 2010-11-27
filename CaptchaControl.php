@@ -496,7 +496,7 @@ class CaptchaControl extends Nette\Forms\TextBase
 	 * @param Nette\IComponent
 	 * @return void
 	 */
-	protected function attached(Nette\IComponent $form)
+	protected function attached($form)
 	{
 		parent::attached($form);
 		if ($form instanceof Form) {
