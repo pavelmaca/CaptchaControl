@@ -12,7 +12,7 @@ For enable add PavelMaca\Captcha\CaptchaControl::register(); to your bootstrap.p
 
 $form = new AppForm;
 $form->addCaptcha('captcha')
-    ->addRule(Form::FILLED, "Rewrite text from image.")
+    ->addRule(Nette\Forms\Form::FILLED, "Rewrite text from image.")
     ->addRule($form["captcha"]->getValidator(), 'Try it again.')
     ->setFontSize(25)
     ->setLength(10) //word length

@@ -12,6 +12,7 @@
 
 namespace PavelMaca\Captcha;
 
+use Nette;
 use Nette\Forms\FormContainer;
 use Nette\Forms\Form;
 use Nette\Forms\HiddenField;
