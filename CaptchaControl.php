@@ -10,7 +10,7 @@
  * @license New BSD License
  */
 
-namespace Extras;
+namespace PavelMaca\Captcha;
 
 use Nette\Forms\FormContainer;
 use Nette\Forms\Form;

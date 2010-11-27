@@ -8,7 +8,7 @@ Documentation and Examples
 --------------------------
 http://github.com/PavelMaca/CaptchaControl
 
-For enable add Extras\CaptchaControl::register(); to your bootstrap.php.
+For enable add PavelMaca\Captcha\CaptchaControl::register(); to your bootstrap.php.
 
 $form = new AppForm;
 $form->addCaptcha('captcha')
