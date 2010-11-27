@@ -3,11 +3,11 @@
 /**
  * Simple CaptchaControl for Nette 1.0+
  * Generate image with text as label for text input.
- * For advanced setting see readme.txt
+ * For advanced setting see readme
  *
  * @author Pavel Máca
  * @link http://github.com/PavelMaca/CaptchaControl
- * @license New BSD License
+ * @license MIT License
  */
 
 namespace PavelMaca\Captcha;

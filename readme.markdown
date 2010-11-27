@@ -1,7 +1,7 @@
 CaptchaControl 
 ===============
 - Autor: Pavel Máca, 2010 [http://www.inseo.cz](http://www.inseo.cz "inseo.cz")
-- Licence: New BSD License
+- Licence: [MIT License](http://creativecommons.org/licenses/MIT/)
 - Github: [http://github.com/PavelMaca/CaptchaControl](http://github.com/PavelMaca/CaptchaControl)
 
 Captcha Control for Nette Framework
