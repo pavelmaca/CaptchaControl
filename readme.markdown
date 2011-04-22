@@ -8,7 +8,7 @@ Captcha Control for Nette Framework
 
 Requirements
 ------------
-- **Nette Framework 2.0 Alpha 2** or 0.9.7
+- **Nette Framework 2.0 Beta
 - **PHP 5.3** *( or PHP 5.2 if you remove namespace)*
 
 Documentation and Examples
@@ -18,7 +18,7 @@ First you must register method addCapcha to Nette\Forms\FormContainer (best plac
 
  **Usage:**
 
-    $form = new AppForm;  
+    $form = new \Nette\Application\UI\Form;  
     $form->addCaptcha('captcha')  
         ->addRule(Nette\Forms\Form::FILLED, "Rewrite text from image.")  
         ->addRule($form["captcha"]->getValidator(), 'Try it again.')  
