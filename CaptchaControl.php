@@ -13,15 +13,15 @@
 namespace PavelMaca\Captcha;
 
 use Nette;
-use Nette\Forms\FormContainer;
+use Nette\Forms\Container as FormContainer;
 use Nette\Forms\Form;
-use Nette\Forms\HiddenField;
-use Nette\Web\Html;
+use Nette\Forms\Controls\HiddenField;
+use Nette\Utils\Html;
 use Nette\Image;
 use Nette\Environment;
-use Nette\Web\Session;
+use Nette\Http\Session;
 
-class CaptchaControl extends Nette\Forms\TextBase
+class CaptchaControl extends \Nette\Forms\Controls\TextBase
 {
 	/*	 * #@+ character groups */
 	const CONSONANTS = 'bcdfghjkmnpqrstvwxz';
@@ -146,12 +146,12 @@ class CaptchaControl extends Nette\Forms\TextBase
 	/**
 	 * Register CaptchaControl to FormContainer, start session and set $defaultFontFile (if not set)
 	 * @return void
-	 * @throws \InvalidStateException
+	 * @throws \Nette\InvalidStateException
 	 */
 	public static function register()
 	{
 		if (self::$registered)
-			throw new \InvalidStateException(__CLASS__ . " is already registered");
+			throw new \Nette\InvalidStateException(__CLASS__ . " is already registered");
 
 		$session = Environment::getSession();
 		if (!$session->isStarted())
@@ -183,14 +183,14 @@ class CaptchaControl extends Nette\Forms\TextBase
 	/**
 	 * @param string path to font file
 	 * @return CaptchaControl provides a fluent interface
-	 * @throws \InvalidArgumentException
+	 * @throws \Nette\InvalidArgumentException
 	 */
 	public function setFontFile($path)
 	{
 		if (!empty($path) && file_exists($path)) {
 			$this->fontFile = $path;
 		} else {
-			throw new \InvalidArgumentException("Font file '" . $path . "' not found");
+			throw new \Nette\InvalidArgumentException("Font file '" . $path . "' not found");
 		}
 		return $this;
 	}
@@ -242,12 +242,12 @@ class CaptchaControl extends Nette\Forms\TextBase
 	/**
 	 * @param array red => 0-255, green => 0-255, blue => 0-255
 	 * @return CaptchaControl provides a fluent interface
-	 * @throws  \InvalidArgumentException
+	 * @throws  \Nette\InvalidArgumentException
 	 */
 	public function setTextColor($rgb)
 	{
 		if (!isset($rgb["red"]) || !isset($rgb["green"]) || !isset($rgb["blue"])) {
-			throw new \InvalidArgumentException("TextColor must be valid rgb array, see Nette\Image::rgb()");
+			throw new \Nette\InvalidArgumentException("TextColor must be valid rgb array, see Nette\Image::rgb()");
 		}
 		$this->textColor = Image::rgb($rgb["red"], $rgb["green"], $rgb["blue"]);
 		return $this;
@@ -282,12 +282,12 @@ class CaptchaControl extends Nette\Forms\TextBase
 	/**
 	 * @param array red 0-255, green 0-255, blue 0-255
 	 * @return CaptchaControl provides a fluent interface
-	 * @throws \InvalidArgumentException
+	 * @throws \Nette\InvalidArgumentException
 	 */
 	public function setBackgroundColor($rgb)
 	{
 		if (!isset($rgb["red"]) || !isset($rgb["green"]) || !isset($rgb["blue"])) {
-			throw new \InvalidArgumentException("BackgroundColor must be valid rgb array, see Nette\Image::rgb()");
+			throw new \Nette\InvalidArgumentException("BackgroundColor must be valid rgb array, see Nette\Image::rgb()");
 		}
 		$this->backgroundColor = Image::rgb($rgb["red"], $rgb["green"], $rgb["blue"]);
 		return $this;
@@ -424,12 +424,12 @@ class CaptchaControl extends Nette\Forms\TextBase
 	 * @param int
 	 * @param string
 	 * @return void
-	 * @throws \InvalidStateException
+	 * @throws \Nette\InvalidStateException
 	 */
 	private function setSession($uid, $word)
 	{
 		if (!self::$session)
-			throw new \InvalidStateException(__CLASS__ . ' session not found');
+			throw new \Nette\InvalidStateException(__CLASS__ . ' session not found');
 
 
 		self::$session->$uid = $word;
@@ -438,12 +438,12 @@ class CaptchaControl extends Nette\Forms\TextBase
 
 	/**
 	 * @return string|bool return false if key not found 
-	 * @throws \InvalidStateException
+	 * @throws \Nette\InvalidStateException
 	 */
 	private function getSession($uid)
 	{
 		if (!self::$session)
-			throw new \InvalidStateException(__CLASS__ . ' session not found');
+			throw new \Nette\InvalidStateException(__CLASS__ . ' session not found');
 
 
 		return isset(self::$session[$uid]) ? self::$session[$uid] : false;
@@ -516,7 +516,7 @@ class CaptchaControl extends Nette\Forms\TextBase
 	/**
 	 * This method will be called when the component (or component's parent)
 	 * becomes attached to a monitored object. Do not call this method yourself.
-	 * @param Nette\IComponent
+	 * @param \Nette\ComponentModel\IComponent
 	 * @return void
 	 */
 	protected function attached($form)
@@ -624,14 +624,14 @@ class CaptchaControl extends Nette\Forms\TextBase
 	 * Validate control. Do not call directly!
 	 * @param CaptchaControl
 	 * @return bool
-	 * @throws \InvalidStateException
+	 * @throws \Nette\InvalidStateException
 	 */
 	public function validateCaptcha(CaptchaControl $control)
 	{
 		$parent = $control->getParent();
 		$hiddenName = $control->getUidName();
 		if (!isset($parent[$hiddenName])) {
-			throw new \InvalidStateException('Can\'t find ' . __CLASS__ . ' hidden field ' . $hiddenName . ' in parent');
+			throw new \Nette\InvalidStateException('Can\'t find ' . __CLASS__ . ' hidden field ' . $hiddenName . ' in parent');
 		}
 
 		$uid = $parent[$hiddenName]->getValue();
