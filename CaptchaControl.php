@@ -157,7 +157,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 		if (!$session->isStarted())
 			$session->start();
 
-		self::$session = $session->getNamespace('PavelMaca.Captcha');
+		self::$session = $session->getSection('PavelMaca.Captcha');
 
 		if (!self::$defaultFontFile)
 			self::$defaultFontFile = __DIR__ . "/fonts/Vera.ttf";
