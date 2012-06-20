@@ -148,16 +148,15 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	 * @return void
 	 * @throws \Nette\InvalidStateException
 	 */
-	public static function register()
+	public static function register(Session $session)
 	{
 		if (self::$registered)
 			throw new \Nette\InvalidStateException(__CLASS__ . " is already registered");
 
-		$session = Environment::getSession();
 		if (!$session->isStarted())
 			$session->start();
 
-		self::$session = $session->getSection('PavelMaca.Captcha');
+		self::$session = $session->getSection(__CLASS__);
 
 		if (!self::$defaultFontFile)
 			self::$defaultFontFile = __DIR__ . "/fonts/Vera.ttf";

@@ -14,7 +14,7 @@ Requirements
 Documentation and Examples
 --------------------------
 First you must register method addCapcha to Nette\Forms\FormContainer (best place is bootstrap.php)
-> ``PavelMaca\Captcha\CaptchaControl::register();``
+> ``PavelMaca\Captcha\CaptchaControl::register(Nette\Http\Session $session);``
 
  **Usage:**
 
