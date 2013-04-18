@@ -18,7 +18,6 @@ use Nette\Forms\Form;
 use Nette\Forms\Controls\HiddenField;
 use Nette\Utils\Html;
 use Nette\Image;
-use Nette\Environment;
 use Nette\Http\Session;
 
 class CaptchaControl extends \Nette\Forms\Controls\TextBase
@@ -420,7 +419,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @param int
+	 * @param string
 	 * @param string
 	 * @return void
 	 * @throws \Nette\InvalidStateException
@@ -436,6 +435,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
+	 * @param string
 	 * @return string|bool return false if key not found 
 	 * @throws \Nette\InvalidStateException
 	 */
@@ -443,14 +443,12 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	{
 		if (!self::$session)
 			throw new \Nette\InvalidStateException(__CLASS__ . ' session not found');
-
-
 		return isset(self::$session[$uid]) ? self::$session[$uid] : false;
 	}
 
 	/**
 	 * Unset session key
-	 * @param int
+	 * @param string
 	 * @return void
 	 */
 	private function unsetSession($uid)
@@ -463,7 +461,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	/**
 	 * @return string
 	 */
-	private function getUidName()
+	private function getUidFieldName()
 	{
 		return "_uid_" . $this->getName();
 	}
@@ -511,6 +509,15 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 		return $image;
 	}
+	
+	public function getControl()
+	{
+		/** TODO: Make sure captcha is validated at this time */
+		$parent = $this->getParent();
+		$parent[$this->getUidFieldName()]->setValue($this->getUid());
+		
+		return parent::getControl();
+	}
 
 	/**
 	 * This method will be called when the component (or component's parent)
@@ -522,8 +529,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	{
 		parent::attached($form);
 		if ($form instanceof Form) {
-			$name = $this->getUidName();
-			$form[$name] = new HiddenField($this->getUid());
+			$uidFieldName = $this->getUidFieldName();
+			$form[$uidFieldName] = new HiddenField();
 		}
 	}
 
@@ -628,12 +635,12 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	public function validateCaptcha(CaptchaControl $control)
 	{
 		$parent = $control->getParent();
-		$hiddenName = $control->getUidName();
-		if (!isset($parent[$hiddenName])) {
-			throw new \Nette\InvalidStateException('Can\'t find ' . __CLASS__ . ' hidden field ' . $hiddenName . ' in parent');
+		$uidFieldName = $control->getUidFieldName();
+		if (!isset($parent[$uidFieldName])) {
+			throw new \Nette\InvalidStateException('Can\'t find ' . __CLASS__ . ' uid field ' . $uidFieldName . ' in parent');
 		}
 
-		$uid = $parent[$hiddenName]->getValue();
+		$uid = $parent[$uidFieldName]->getValue();
 
 		$sessionValue = $control->getSession($uid);
 		$control->unsetSession($uid);
