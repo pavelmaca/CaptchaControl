@@ -500,7 +500,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 		$this->setSession($this->getUid(), $this->getWord());
 
 		$image = clone $this->label;
-		$image->src = 'data:image/png;base64,' . $this->drawImage();
+		$image->src = $this->getImageUri();
 		//$image->width = $this->getImageWidth();
 		//$image->height = $this->getImageHeight();
 
@@ -536,11 +536,16 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 	/*	 * **************** Drawing image **************p*m* */
 
+	protected function getImageUri() 
+	{
+		return 'data:image/png;base64,' . base64_encode($this->getImageData());
+	} 
+	
 	/**
 	 * Draw captcha image and encode to base64 string
 	 * @return string
 	 */
-	private function drawImage()
+	protected function getImageData()
 	{
 		$word = $this->getWord();
 		$font = $this->getFontFile();
