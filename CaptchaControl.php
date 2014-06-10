@@ -17,7 +17,7 @@ use Nette\Forms\Container as FormContainer;
 use Nette\Forms\Form;
 use Nette\Forms\Controls\HiddenField;
 use Nette\Utils\Html;
-use Nette\Image;
+use Nette\Utils\Image;
 use Nette\Http\Session;
 
 class CaptchaControl extends \Nette\Forms\Controls\TextBase
@@ -60,7 +60,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 	/** @var int */
 	public static $defaultExpire = 10800; // 3 hours
-	
+
 	/** @var bool */
 	public static $defaultUseNumbers = true;
 
@@ -108,7 +108,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 	/** @var int */
 	private $expire;
-	
+
 	/** @var bool */
 	private $useNumbers;
 
@@ -203,7 +203,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 	/**
 	 * @param int
-	 * @return CaptchaControl provides a fluent interface 
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setLength($length)
 	{
@@ -221,7 +221,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 	/**
 	 * @param int
-	 * @return CaptchaControl provides a fluent interface 
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setFontSize($size)
 	{
@@ -230,7 +230,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return int 
+	 * @return int
 	 */
 	public function getFontSize()
 	{
@@ -245,7 +245,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	public function setTextColor($rgb)
 	{
 		if (!isset($rgb["red"]) || !isset($rgb["green"]) || !isset($rgb["blue"])) {
-			throw new \Nette\InvalidArgumentException("TextColor must be valid rgb array, see Nette\Image::rgb()");
+			throw new \Nette\InvalidArgumentException("TextColor must be valid rgb array, see Nette\Utils\Image::rgb()");
 		}
 		$this->textColor = Image::rgb($rgb["red"], $rgb["green"], $rgb["blue"]);
 		return $this;
@@ -260,8 +260,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @param int 
-	 * @return CaptchaControl provides a fluent interface 
+	 * @param int
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setTextMargin($margin)
 	{
@@ -285,7 +285,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	public function setBackgroundColor($rgb)
 	{
 		if (!isset($rgb["red"]) || !isset($rgb["green"]) || !isset($rgb["blue"])) {
-			throw new \Nette\InvalidArgumentException("BackgroundColor must be valid rgb array, see Nette\Image::rgb()");
+			throw new \Nette\InvalidArgumentException("BackgroundColor must be valid rgb array, see Nette\Utils\Image::rgb()");
 		}
 		$this->backgroundColor = Image::rgb($rgb["red"], $rgb["green"], $rgb["blue"]);
 		return $this;
@@ -300,8 +300,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @param int 
-	 * @return CaptchaControl provides a fluent interface 
+	 * @param int
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setImageHeight($heightt)
 	{
@@ -310,7 +310,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return int 
+	 * @return int
 	 */
 	public function getImageHeight()
 	{
@@ -318,8 +318,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @param int 
-	 * @return CaptchaControl provides a fluent interface 
+	 * @param int
+	 * @return CaptchaControl provides a fluent interface
 	 */
 	public function setImageWidth($width)
 	{
@@ -328,7 +328,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return int 
+	 * @return int
 	 */
 	public function getImageWidth()
 	{
@@ -383,15 +383,15 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	}
 
 	/**
-	 * @return int 
+	 * @return int
 	 */
 	public function getExpire()
 	{
 		return $this->expire;
 	}
-	
+
 	/**
-	 * Use numbers in captcha image? 
+	 * Use numbers in captcha image?
 	 * @param bool
 	 * @return CaptchaControl provides a fluent interface
 	 */
@@ -436,7 +436,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 	/**
 	 * @param string
-	 * @return string|bool return false if key not found 
+	 * @return string|bool return false if key not found
 	 * @throws \Nette\InvalidStateException
 	 */
 	private function getSession($uid)
@@ -509,13 +509,13 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 		return $image;
 	}
-	
+
 	public function getControl()
 	{
 		/** TODO: Make sure captcha is validated at this time */
 		$parent = $this->getParent();
 		$parent[$this->getUidFieldName()]->setValue($this->getUid());
-		
+
 		return parent::getControl();
 	}
 
