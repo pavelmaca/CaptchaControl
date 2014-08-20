@@ -23,9 +23,9 @@ use Nette\Http\Session;
 class CaptchaControl extends \Nette\Forms\Controls\TextBase
 {
 	/*	 * #@+ character groups */
-	const CONSONANTS = 'bcdfghjkmnpqrstvwxz';
+	const CONSONANTS = 'bcdfghjkmnpqrstvwxz'; // not 'l'
 	const VOWELS = 'aeiuy'; // not 'o'
-	const NUMBERS = '123456789'; // not '0'
+	const NUMBERS = '23456789'; // not '0' and '1'
 	/*	 * #@- */
 
 	/** @var string */
@@ -303,9 +303,9 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	 * @param int
 	 * @return CaptchaControl provides a fluent interface
 	 */
-	public function setImageHeight($heightt)
+	public function setImageHeight($height)
 	{
-		$this->imageHeight = (int) $heightt;
+		$this->imageHeight = (int) $height;
 		return $this;
 	}
 
@@ -542,7 +542,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	} 
 	
 	/**
-	 * Draw captcha image and encode to base64 string
+	 * Draw captcha image
 	 * @return string
 	 */
 	protected function getImageData()
@@ -595,7 +595,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		return base64_encode($contents);
+		return $contents;
 	}
 
 	/**
