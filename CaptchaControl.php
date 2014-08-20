@@ -23,9 +23,9 @@ use Nette\Http\Session;
 class CaptchaControl extends \Nette\Forms\Controls\TextBase
 {
 	/*	 * #@+ character groups */
-	const CONSONANTS = 'bcdfghjkmnpqrstvwxz';
+	const CONSONANTS = 'bcdfghjkmnpqrstvwxz'; // not 'l'
 	const VOWELS = 'aeiuy'; // not 'o'
-	const NUMBERS = '123456789'; // not '0'
+	const NUMBERS = '23456789'; // not '0' and '1'
 	/*	 * #@- */
 
 	/** @var string */
