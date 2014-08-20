@@ -542,7 +542,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	} 
 	
 	/**
-	 * Draw captcha image and encode to base64 string
+	 * Draw captcha image
 	 * @return string
 	 */
 	protected function getImageData()
@@ -595,7 +595,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		return base64_encode($contents);
+		return $contents;
 	}
 
 	/**
