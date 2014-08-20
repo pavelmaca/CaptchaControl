@@ -303,9 +303,9 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	 * @param int
 	 * @return CaptchaControl provides a fluent interface
 	 */
-	public function setImageHeight($heightt)
+	public function setImageHeight($height)
 	{
-		$this->imageHeight = (int) $heightt;
+		$this->imageHeight = (int) $height;
 		return $this;
 	}
 
