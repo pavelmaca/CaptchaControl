@@ -413,7 +413,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	/**
 	 * @return int
 	 */
-	private function getUid()
+	protected function getUid()
 	{
 		return $this->uid;
 	}
