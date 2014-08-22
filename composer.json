@@ -1,0 +1,17 @@
+{
+	"name": "PavelMaca/CaptchaControl",
+	"description": "Captcha Control for Nette Framework",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Pavel Máca",
+			"homepage": "http://www.inseo.cz"
+		}
+	],
+	"require": {
+		"php": ">=5.3"
+	},
+	"autoload": {
+		"classmap": ["/"]
+	}
+}
