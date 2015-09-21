@@ -11,6 +11,21 @@ Requirements
 - **Nette Framework 2.0 Beta
 - **PHP 5.3** *( or PHP 5.2 if you remove namespace)*
 
+Installation
+------------
+The best way to install is using [Composer](https://getcomposer.org). Add the following repository to `composer.json`:
+
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/PavelMaca/CaptchaControl.git"
+		}
+	]
+	
+and run:
+
+    $ composer require pavelmaca/captcha-control:@dev
+
 Documentation and Examples
 --------------------------
 First you must register method addCapcha to Nette\Forms\FormContainer (best place is bootstrap.php)
