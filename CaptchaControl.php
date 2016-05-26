@@ -17,7 +17,7 @@ use Nette\Forms\Container as FormContainer;
 use Nette\Forms\Form;
 use Nette\Forms\Controls\HiddenField;
 use Nette\Utils\Html;
-use Nette\Utils\Image;
+use Nette\Image;
 use Nette\Http\Session;
 
 class CaptchaControl extends \Nette\Forms\Controls\TextBase
