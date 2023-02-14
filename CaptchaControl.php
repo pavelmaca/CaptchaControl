@@ -140,6 +140,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 		$this->useNumbers(self::$defaultUseNumbers);
 
 		$this->setUid(uniqid());
+
+        $this->monitor("Nette\Forms\Form", [$this, "onAttached"]);
 	}
 
 	/**
@@ -161,7 +163,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 			self::$defaultFontFile = __DIR__ . "/fonts/Vera.ttf";
 
 
-		FormContainer::extensionMethod('addCaptcha', callback(__CLASS__, 'addCaptcha'));
+		FormContainer::extensionMethod('addCaptcha', [__CLASS__, 'addCaptcha']);
 		self::$registered = TRUE;
 	}
 
@@ -477,11 +479,11 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 			for ($i = 0; $i < $this->getLength(); $i++) {
 				if($this->useNumbers === true && mt_rand(0, 10) % 3 === 0){
 					$group = self::NUMBERS;
-					$s .= $group{mt_rand(0, strlen($group) - 1)};
+					$s .= $group[mt_rand(0, strlen($group) - 1)];
 					continue;
 				}
 				$group = $i % 2 === 0 ? self::CONSONANTS : self::VOWELS;
-				$s .= $group{mt_rand(0, strlen($group) - 1)};
+				$s .= $group[mt_rand(0, strlen($group) - 1)];
 			}
 			$this->word = $s;
 		}
@@ -510,7 +512,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 		return $image;
 	}
 
-	public function getControl()
+	public function getControl(): Nette\Utils\Html
 	{
 		/** TODO: Make sure captcha is validated at this time */
 		$parent = $this->getParent();
@@ -522,16 +524,13 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	/**
 	 * This method will be called when the component (or component's parent)
 	 * becomes attached to a monitored object. Do not call this method yourself.
-	 * @param \Nette\ComponentModel\IComponent
+	 * @param \Nette\Forms\Form
 	 * @return void
 	 */
-	protected function attached($form)
+	protected function onAttached($form)
 	{
-		parent::attached($form);
-		if ($form instanceof Form) {
-			$uidFieldName = $this->getUidFieldName();
-			$form[$uidFieldName] = new HiddenField();
-		}
+        $uidFieldName = $this->getUidFieldName();
+        $form[$uidFieldName] = new HiddenField();
 	}
 
 	/*	 * **************** Drawing image **************p*m* */
@@ -560,8 +559,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 		$first = Image::fromBlank($width, $height, $bgColor);
 		$second = Image::fromBlank($width, $height, $bgColor);
 
-		$x = ($width - $box['width']) / 2;
-		$y = ($height + $box['height']) / 2;
+		$x = (int)(($width - $box['width']) / 2);
+		$y = (int)(($height + $box['height']) / 2);
 
 		$first->fttext($size, 0, $x, $y, $textColor, $font, $word);
 
@@ -571,8 +570,8 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 
 		for ($x = 0; $x < $width; $x++) {
 			for ($y = 0; $y < $height; $y++) {
-				$sy = round($y + sin($x * $frequency + $phase) * $amplitude);
-				$sx = round($x + sin($y * $frequency + $phase) * $amplitude);
+				$sy = (int)round($y + sin($x * $frequency + $phase) * $amplitude);
+				$sx = (int)round($x + sin($y * $frequency + $phase) * $amplitude);
 
 				$color = $first->colorat($x, $y);
 				$second->setpixel($sx, $sy, $color);
@@ -658,7 +657,7 @@ class CaptchaControl extends \Nette\Forms\Controls\TextBase
 	 */
 	public function getValidator()
 	{
-		return callback($this, 'validateCaptcha');
+		return [$this, 'validateCaptcha'];
 	}
 
 }
